@@ -1,6 +1,6 @@
 blueprint:
-  name: Send a camera snapshot when something changes
-  description: 
+  name: Send a camera snapshot when something is opened
+  description: Send a camera snapshot when something is opened
   domain: automation
   input:
     door_window_sensor:
