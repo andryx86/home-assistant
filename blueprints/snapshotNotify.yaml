@@ -7,9 +7,9 @@ blueprint:
       name: Opening sensor
       description: The sensor wich triggers the snapshot creation
       selector:
-          entity:
-            domain: binary_sensor
-            device_class: opening
+        entity:
+          domain: binary_sensor
+          device_class: opening
 
     camera:
       name: Camera
@@ -17,7 +17,7 @@ blueprint:
       selector:
         entity:
           domain: camera
-    
+
     alarmo_device:
       name: Alarmo Instance
       description: The instance triggering the alarm
@@ -48,30 +48,30 @@ blueprint:
       name: Notification message (Optional)
       description: 'Default: "{{ door_window_sensor_name }} detected movement!"'
       default: "{{ door_window_sensor_name }} detected movement!"
-      
+
     delay:
       name: Delay (Optional)
       description: Wait before creating camera snapshot
       default: ""
       selector:
         number:
-            min: 0
-            max: 60
-            unit_of_measurement: seconds
-            mode: slider
+          min: 0
+          max: 60
+          unit_of_measurement: seconds
+          mode: slider
 
 trigger:
   platform: state
   entity_id: !input door_window_sensor
   from: "off"
   to: "on"
-  
-condition: 
-  -condition: state
+
+condition:
+  - condition: state
     entity_id: !input alarmo_device
     state: triggered
     attribute: arm_mode
-  
+
 variables:
   door_window_sensor: !input door_window_sensor
   door_window_sensor_name: "{{ states[door_window_sensor].name }}"
@@ -93,11 +93,11 @@ action:
       filename: "{{ snapshot_create_file_path }}"
 
   - device_id: !input notify_device
-    domain: mobile_app
+    domain: mobile_appxtracte 
     type: notify
     title: "{{ notification_title }}"
     message: "{{ notification_message }}"
     data: >
-      {% set android_data = {"image": "%s"} | format(snapshot_access_file_path) %}
+      '{% set android_data = {"image": "%s"} | format(snapshot_access_file_path) %}
       {% set ios_data = {"attachment": {"url": "%s", "content_type": "JPEG"}} | format(snapshot_access_file_path) %}
-      {{ ios_data if is_ios else android_data }}
+      {{ ios_data if is_ios else android_data }}'
