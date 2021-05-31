@@ -17,6 +17,13 @@ blueprint:
       selector:
         entity:
           domain: camera
+    
+    alarmo_device:
+      name: Alarmo Instance
+      description: The instance triggering the alarm
+      selector:
+        entity:
+          domain: alarm_control_panel
 
     notify_device:
       name: Device to notify
@@ -58,7 +65,13 @@ trigger:
   entity_id: !input door_window_sensor
   from: "off"
   to: "on"
-
+  
+condition: 
+  -condition: state
+    entity_id: !input alarmo_device
+    state: triggered
+    attribute: arm_mode
+  
 variables:
   door_window_sensor: !input door_window_sensor
   door_window_sensor_name: "{{ states[door_window_sensor].name }}"
