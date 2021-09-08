@@ -81,7 +81,8 @@ max_exceeded: silent
 trigger:
 - platform: state
   entity_id: !input 'activated'
-  to: 'on'
+  from: 'armed_away'
+  to: 'pending'
 variables:
   activated: !input 'activated'
   delay: !input 'delay'
@@ -101,7 +102,7 @@ action:
 - repeat:
     while:
     - condition: template
-      value_template: '{{ activated == none or is_state(activated, ''on'') }}'
+      value_template: '{{ activated == none or is_state(activated, ''disarmed'') }}'
     sequence:
     - delay:
         milliseconds: '{{ delay }}'
