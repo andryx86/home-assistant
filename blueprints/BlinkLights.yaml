@@ -8,7 +8,7 @@ ablueprint:
       description: Enter the Entity Name for Trigger (On-Off)
       selector:
         entity:
-          domain: 
+          domain: alarm
     target_lights:
       name: Lights
       description: Lights to flash
