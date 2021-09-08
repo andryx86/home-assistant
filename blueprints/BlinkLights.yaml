@@ -102,7 +102,7 @@ action:
 - repeat:
     while:
     - condition: template
-      value_template: '{{ activated == none or is_state(activated, ''disarmed'') }}'
+      value_template: '{{ activated == none or is_state(activated, ''pending'') or is_state(activated, ''triggered'') }}'
     sequence:
     - delay:
         milliseconds: '{{ delay }}'
